@@ -9,7 +9,11 @@
     </parent>
     <artifactId>mp3-config</artifactId>
    <dependencies>
-
+       <dependency>
+           <groupId>com.smile</groupId>
+           <artifactId>mp3-service</artifactId>
+           <version>0.0.1-SNAPSHOT</version>
+       </dependency>
    </dependencies>
 
 </project>
