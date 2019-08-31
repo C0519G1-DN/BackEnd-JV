@@ -12,7 +12,9 @@ public interface UserService {
     List<UserDTO> getUsers2();
 
     void saveUser(User theUser);
+    void updateUser(User theUser);
 
+    UserDTO getUserDTO(int theId);
     User getUser(int theId);
 
     void deleteUser(int theId);

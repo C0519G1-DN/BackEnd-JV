@@ -29,16 +29,24 @@ public class UserController {
     @Autowired
     public UserRepository userRepository;
 
-    @GetMapping(value={"/lala"})
-    public ResponseEntity<List<UserDTO>> listAllUsers2() {
-        List<UserDTO> users = userService.getUsers2();
-        return new ResponseEntity<List<UserDTO>>(users, HttpStatus.OK);
+//    @GetMapping(value={"/lala"})
+//    public ResponseEntity<List<UserDTO>> listAllUsers2() {
+//        List<UserDTO> users = userService.getUsers2();
+//        return new ResponseEntity<List<UserDTO>>(users, HttpStatus.OK);
+//    }
+
+    @GetMapping(value={"/update/{id}"})
+    public ResponseEntity<UserDTO> myUserDTO(@PathVariable int id) {
+        UserDTO user = userService.getUserDTO(id);
+        return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
     }
 
-    @GetMapping(value={"/haha"})
-    public ResponseEntity<List<User>> listAllUsers() {
-        List<User> users = userService.getUsers();
-        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+    @PutMapping(value={"/update/{id}"})
+    public ResponseEntity<?> myUser(@PathVariable int id, @RequestBody User myuser) {
+        myuser.setPassword(userService.getUser(id).getPassword());
+            userService.updateUser(myuser);
+            return ResponseEntity.ok(myuser);
+
     }
 
     @PostMapping(value={"/register"})
