@@ -9,7 +9,22 @@
     </parent>
     <artifactId>mp3-webservice</artifactId>
     <dependencies>
-
+        <dependency>
+            <groupId>com.smile</groupId>
+            <artifactId>mp3-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.smile</groupId>
+            <artifactId>mp3-dao</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.smile</groupId>
+            <artifactId>mp3-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 </project>

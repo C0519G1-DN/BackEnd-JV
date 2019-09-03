@@ -10,7 +10,11 @@
     <artifactId>mp3-common</artifactId>
 
    <dependencies>
-
+       <dependency>
+           <groupId>com.smile</groupId>
+           <artifactId>mp3-dao</artifactId>
+           <version>0.0.1-SNAPSHOT</version>
+       </dependency>
    </dependencies>
 
 
