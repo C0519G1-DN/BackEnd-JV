@@ -1,6 +1,8 @@
 package com.smile.mp3dao.entity;
 
+//import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.smile.mp3common.validation.Unique;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -13,7 +15,7 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name_user")
+    @Column(name = "name_user", length = 50)
     private String name;
 
     private int age;
@@ -22,13 +24,16 @@ public class User {
 
     private String phone;
 
-//        @Unique(message = "Email is already exit")
+    @Column(length = 50)
+//    @Unique(message = "Email is already exit")
     private String email;
 
-    @Column(name = "user_name")
+    @Column(name = "user_name", length = 50)
 //    @Unique(message = "Username is already exit")
     private String username;
 
+    @JsonIgnore
+    @Column(length = 200)
     private String password;
 
     private Boolean delected;
