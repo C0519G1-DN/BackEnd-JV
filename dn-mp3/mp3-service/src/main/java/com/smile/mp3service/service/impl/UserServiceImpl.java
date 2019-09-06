@@ -17,15 +17,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-
-
     @Override
     public List<UserDTO> getUsers2() {
-        List<User> a= userRepository.findAll();
+        List<User> a = userRepository.findAll();
         List<UserDTO> b = new ArrayList<>();
-        for (User c:a
-        ) {b.add(new UserDTO(c));
-
+        for (User c : a) {
+            b.add(new UserDTO(c));
         }
         return b;
     }
@@ -36,8 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User theUser)
-    {
+    public void saveUser(User theUser) {
         String hash = BCrypt.hashpw(theUser.getPassword(), BCrypt.gensalt(12));
         theUser.setPassword(hash);
         userRepository.save(theUser);
@@ -50,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserDTO(int theId) {
-        User d= userRepository.findById(theId).orElse(null);
+        User d = userRepository.findById(theId).orElse(null);
         UserDTO e = new UserDTO(d);
         return e;
     }
@@ -62,6 +58,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(int theId) {
-
+        
     }
 }

@@ -14,8 +14,8 @@ public interface UserService {
     void saveUser(User theUser);
     void updateUser(User theUser);
 
-    UserDTO getUserDTO(int theId);
     User getUser(int theId);
+    UserDTO getUserDTO(int theId);
 
     void deleteUser(int theId);
 }

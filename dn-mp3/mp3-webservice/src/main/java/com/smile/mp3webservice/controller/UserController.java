@@ -46,7 +46,6 @@ public class UserController {
         myuser.setPassword(userService.getUser(id).getPassword());
             userService.updateUser(myuser);
             return ResponseEntity.ok(myuser);
-
     }
 
     @PostMapping(value={"/register"})
@@ -64,4 +63,9 @@ public class UserController {
         userService.saveUser(myuser);
         return ResponseEntity.ok(myuser);
     }
+
+//    @GetMapping(value = "/getUser/{id}")
+//    public ResponseEntity<UserDTO> getUserId(@PathVariable int id){
+//        Usr
+//    }
 }

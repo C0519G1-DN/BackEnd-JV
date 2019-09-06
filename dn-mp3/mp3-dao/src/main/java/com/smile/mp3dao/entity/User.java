@@ -22,7 +22,7 @@ public class User {
 
     private String phone;
 
-//        @Unique(message = "Email is already exit")
+    //        @Unique(message = "Email is already exit")
     private String email;
 
     @Column(name = "user_name")
@@ -31,7 +31,7 @@ public class User {
 
     private String password;
 
-    private Boolean delected;
+//    private Boolean delected;
 
     public int getId() {
         return id;
@@ -97,16 +97,18 @@ public class User {
         this.password = password;
     }
 
-    public Boolean getDelected() {
-        return delected;
-    }
-
-    public void setDelected(boolean delected) {
-        this.delected = delected;
-    }
+//    public Boolean getDelected() {
+//        return delected;
+//    }
+//
+//    public void setDelected(boolean delected) {
+//        this.delected = delected;
+//    }
 
     @Override
     public String toString() {
-        return getAge() + getId() + getEmail() + getName() + getUsername() + getGender() + getDelected() + getPassword() + getPhone();
+        return getAge() + getId() + getEmail() + getName() + getUsername() + getGender() +
+//                getDelected() +
+                getPassword() + getPhone();
     }
 }
