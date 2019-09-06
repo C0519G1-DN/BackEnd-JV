@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserService {
 
 
 
+
 //    @Override
 //    public List<UserDTO> getUsers2() {
 //        List<User> a= userRepository.findAll();
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
 //        return b;
 //    }
 //
+
     @Override
     public List<User> getUsers() {
         return userRepository.findAll();
@@ -44,6 +46,7 @@ public class UserServiceImpl implements UserService {
     {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
         theUser.setPassword(passwordEncoder.encode(theUser.getPassword()));
+
         userRepository.save(theUser);
     }
 
@@ -54,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserDTO(int theId) {
-        User d= userRepository.findById(theId).orElse(null);
+        User d = userRepository.findById(theId).orElse(null);
         UserDTO e = new UserDTO(d);
         return e;
     }
@@ -66,7 +69,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(int theId) {
-
+        
     }
 
     private Set getAuthority(User user) {

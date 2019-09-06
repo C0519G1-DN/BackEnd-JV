@@ -17,5 +17,6 @@ public interface UserService {
     UserDTO getUserDTO(int id);
     User getUser(int id);
 
+
     void deleteUser(int id);
 }
