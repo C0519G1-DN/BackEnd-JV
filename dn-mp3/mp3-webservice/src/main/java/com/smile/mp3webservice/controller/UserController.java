@@ -101,21 +101,19 @@ public class UserController {
 
     @PostMapping(value="/login")
     public ResponseEntity<?> login(@RequestBody User user ) throws Exception {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
-            );
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwtToken = jwtTokenUtil.generateToken(authentication);
-            int id = userDetailsService.getIdByUsername(user.getUsername());
-            UserDetails userDetails =(UserDetails) authentication.getPrincipal();
-            return new ResponseEntity<>( new JwtResponse(jwtToken,userDetails.getUsername(),id),HttpStatus.OK);
-        } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
-        } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
-        }
-
-
+            try {
+                Authentication authentication = authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+                );
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                String jwtToken = jwtTokenUtil.generateToken(authentication);
+                int id = userDetailsService.getIdByUsername(user.getUsername());
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                return new ResponseEntity<>(new JwtResponse(jwtToken, userDetails.getUsername(), id), HttpStatus.OK);
+            } catch (DisabledException e) {
+                throw new Exception("USER_DISABLED", e);
+            } catch (BadCredentialsException e) {
+                throw new Exception("INVALID_CREDENTIALS", e);
+            }
     }
 }
