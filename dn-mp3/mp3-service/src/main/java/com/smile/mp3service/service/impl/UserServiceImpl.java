@@ -47,6 +47,8 @@ public class UserServiceImpl implements UserService {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
         theUser.setPassword(passwordEncoder.encode(theUser.getPassword()));
 
+        theUser.setDelected(false);
+
         userRepository.save(theUser);
     }
 
@@ -72,11 +74,4 @@ public class UserServiceImpl implements UserService {
         
     }
 
-    private Set getAuthority(User user) {
-        Set authorities = new HashSet<>();
-
-            authorities.add(new SimpleGrantedAuthority("ROLE"+"ADMIN" ));
-
-        return authorities;
-    }
 }
