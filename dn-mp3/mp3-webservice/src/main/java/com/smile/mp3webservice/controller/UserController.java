@@ -76,6 +76,7 @@ public class UserController {
         return ResponseEntity.ok(myuser);
     }
 
+
 //    @PostMapping("/register")
 //    public ResponseEntity<?> createAccounts(@Valid @RequestBody User myuser, BindingResult bindingResult) {
 //        if (bindingResult.hasErrors()) {
@@ -116,4 +117,5 @@ public class UserController {
                 throw new Exception("INVALID_CREDENTIALS", e);
             }
     }
+
 }
