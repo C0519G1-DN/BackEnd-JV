@@ -17,7 +17,7 @@ public class UserDTO implements Serializable {
         this.phone= original.getPhone();
         this.username = original.getUsername();
         this.email = original.getEmail();
-//        this.delected= original.getDelected();
+        this.delected= original.getDelected();
     }
 
     private int id;
@@ -34,7 +34,7 @@ public class UserDTO implements Serializable {
 
     private String username;
 
-//    private boolean delected;
+    private boolean delected;
 
     public int getId() {
         return id;
@@ -92,11 +92,11 @@ public class UserDTO implements Serializable {
         this.username = username;
     }
 
-//    public Boolean getDelected() {
-//        return delected;
-//    }
-//
-//    public void setDelected(boolean delected) {
-//        this.delected = delected;
-//    }
+    public Boolean getDelected() {
+        return delected;
+    }
+
+    public void setDelected(boolean delected) {
+        this.delected = delected;
+    }
 }

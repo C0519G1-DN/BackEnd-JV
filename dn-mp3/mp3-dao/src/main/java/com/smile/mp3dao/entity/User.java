@@ -38,7 +38,7 @@ public class User {
     @Column(length = 200)
     private String password;
 
-//    private Boolean delected;
+    private Boolean delected;
 
     public int getId() {
         return id;
@@ -104,18 +104,18 @@ public class User {
         this.password = password;
     }
 
-//    public Boolean getDelected() {
-//        return delected;
-//    }
-//
-//    public void setDelected(boolean delected) {
-//        this.delected = delected;
-//    }
+    public Boolean getDelected() {
+        return delected;
+    }
+
+    public void setDelected(boolean delected) {
+        this.delected = delected;
+    }
 
     @Override
     public String toString() {
         return getAge() + getId() + getEmail() + getName() + getUsername() + getGender() +
-//                getDelected() +
+                getDelected() +
                 getPassword() + getPhone();
     }
 }
