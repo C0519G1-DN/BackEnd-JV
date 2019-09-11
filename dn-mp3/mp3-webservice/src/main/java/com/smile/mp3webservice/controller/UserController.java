@@ -59,7 +59,7 @@ public class UserController {
             userService.updateUser(myuser);
             return ResponseEntity.ok(myuser);
     }
-//
+
     @PostMapping(value={"/register"})
     public ResponseEntity<?> register(@RequestBody User myuser ) {
         if(userRepository.countByUsernameOrEmail(myuser.getUsername(),myuser.getEmail())>0) {
@@ -89,13 +89,6 @@ public class UserController {
     @GetMapping(value={"/admin"})
     public ResponseEntity<?> getforadmin() {
 //         Object user= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<User> user = userService.getUsers();
-        return ResponseEntity.ok(user);
-    }
-
-    @GetMapping(value={"/test"})
-    public ResponseEntity<?> gettest() {
-         Object user= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<User> users = userService.getUsers();
         return ResponseEntity.ok(users);
     }
@@ -106,7 +99,6 @@ public class UserController {
                 Authentication authentication = authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
                 );
-                SecurityContextHolder.getContext().setAuthentication(authentication);
                 String jwtToken = jwtTokenUtil.generateToken(authentication);
                 int id = userDetailsService.getIdByUsername(user.getUsername());
                 UserDetails userDetails = (UserDetails) authentication.getPrincipal();

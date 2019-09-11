@@ -4,23 +4,24 @@ import com.smile.mp3common.exception.ResourceNotFoundException;
 import com.smile.mp3dao.constant.AppConstant;
 import com.smile.mp3dao.dto.PlaylistDTO;
 import com.smile.mp3dao.entity.Playlist;
+import com.smile.mp3dao.entity.Song;
 import com.smile.mp3dao.repository.PlaylistRepository;
+import com.smile.mp3dao.repository.SongRepository;
 import com.smile.mp3service.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Service
 public class PlaylistServiceImpl implements PlaylistService {
 
     @Autowired
     PlaylistRepository playlistRepository;
+    @Autowired
+    SongRepository songRepository;
 
     @Override
     public void savePlaylist(PlaylistDTO playlistDTO) {
@@ -37,20 +38,24 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
-    public List<PlaylistDTO> findAllByDelectedIsFalse() {
-        return playlistRepository.findAllByDelectedIsFalse();
+    public void savePlaylistWithSongs(int idPlaylist, int idSong) {
+        Playlist thePlaylist = playlistRepository.findById(idPlaylist).orElse(null);
+        Song theSong = songRepository.findById(idSong).orElse(null);
+        Set<Song> set = thePlaylist.getSongs();
+        set.add(theSong);
+        thePlaylist.setSongs(set);
+        playlistRepository.save(thePlaylist);
     }
 
 //    @Override
-//    public List<PlaylistDTO> getPlaylistsDTO() {
-//        List<Playlist> allPlaylists = playlistRepository.findAll();
-//        List<PlaylistDTO> allPlaylistsDTO = new ArrayList<>();
-//        for (Playlist e : allPlaylists
-//        ) {
-//            allPlaylistsDTO.add(new PlaylistDTO(e));
-//        }
-//        return allPlaylistsDTO;
+//    public List<PlaylistDTO> findAllByDelectedIsFalse() {
+//        return playlistRepository.findAllByDelectedIsFalse();
 //    }
+@Override
+public List<Playlist> getPlaylists(){
+        return playlistRepository.findAll();
+}
+
 
     @Override
     public Playlist getOnePlaylist(int id) throws ResourceNotFoundException {

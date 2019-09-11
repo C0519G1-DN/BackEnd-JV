@@ -2,14 +2,15 @@ package com.smile.mp3dao.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "playlist0")
+@Table(name = "playlist02")
 
 public class Playlist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id")
     private int id;
     private String name;
@@ -17,6 +18,16 @@ public class Playlist {
     private String username_create;
     private Date createDay;
     private Boolean delected;
+
+    @ManyToMany
+    @JoinTable(
+            name="playlist_song",
+            joinColumns=@JoinColumn(name="playlist_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="song_id", referencedColumnName="id"))
+    private Set<Song> songs = new HashSet<Song>();
+
+    public Playlist() {
+    }
 
     public int getId() {
         return id;
@@ -66,4 +77,12 @@ public class Playlist {
         this.delected = delected;
     }
 
+
+
+    public Set<Song> getSongs() {
+        return songs;
+    }
+    public void setSongs(Set<Song> songs) {
+        this.songs = songs;
+    }
 }
