@@ -38,7 +38,6 @@ public class Singer {
 
 
 
-
     public Singer() {
     }
 
