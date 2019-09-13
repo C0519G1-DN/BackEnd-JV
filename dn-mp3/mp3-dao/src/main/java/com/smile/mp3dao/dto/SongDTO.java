@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class SongDTO {
 
+        private int id;
         private String name;
         private String des;
         private MultipartFile file_song;
@@ -14,7 +15,13 @@ public class SongDTO {
     public SongDTO() {
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
