@@ -26,6 +26,7 @@ public class Playlist {
             inverseJoinColumns=@JoinColumn(name="song_id", referencedColumnName="id"))
     private Set<Song> songs = new HashSet<Song>();
 
+
     public Playlist() {
     }
 

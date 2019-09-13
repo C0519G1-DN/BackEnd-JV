@@ -43,6 +43,7 @@ public class JwtTokenUtil implements Serializable {
     Logger logger= LoggerFactory.getLogger(JwtTokenUtil.class);
 
     public String generateToken(Authentication authentication){
+        System.out.println("hihi");
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))

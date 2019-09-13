@@ -19,18 +19,20 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SongController {
-
+    String AAA= "E:\\IT\\IT-CodeGym\\4.Mod4\\MyRepository-C0519\\FrontEnd-Ng\\mp3-angular\\src\\assets\\";
     @Autowired
     public SongService songService;
 
     @PostMapping(value = {"/upsong"}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addSong(@ModelAttribute SongDTO data) throws IOException {
-        try {
-            MultipartFile fSong = data.getFile_song();
-            File convertFileSong = new File("D:\\WorkSpace\\FrontEnd-v2\\mp3-angular\\src\\assets\\" + fSong.getOriginalFilename());
+
+        try{MultipartFile fSong = data.getFile_song();
+            File convertFileSong = new File(AAA+fSong.getOriginalFilename());
             fSong.transferTo(convertFileSong);
             MultipartFile iSong = data.getImg_song();
-            File convertImgSong = new File("D:\\WorkSpace\\FrontEnd-v2\\mp3-angular\\src\\assets\\" + iSong.getOriginalFilename());
+            File convertImgSong = new File(AAA+iSong.getOriginalFilename());
+
+
             iSong.transferTo(convertImgSong);
             songService.saveSong(data);
             Song feedback = new Song(data);
