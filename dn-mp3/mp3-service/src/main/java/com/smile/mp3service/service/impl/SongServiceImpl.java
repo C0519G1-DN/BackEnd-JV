@@ -1,5 +1,6 @@
 package com.smile.mp3service.service.impl;
 
+import com.smile.mp3common.exception.ResourceNotFoundException;
 import com.smile.mp3dao.dto.SongDTO;
 import com.smile.mp3dao.entity.Song;
 import com.smile.mp3dao.repository.SongRepository;
@@ -25,7 +26,7 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public void saveSong(SongDTO songDTO) throws IOException {
+    public void saveSong(SongDTO songDTO){
         MultipartFile fSong = songDTO.getFile_song();
         MultipartFile iSong = songDTO.getImg_song();
         Date date= new Date();
@@ -42,11 +43,39 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public Song getSong(int id) {
+
+        return songRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void deleteSong(int id) throws ResourceNotFoundException {
+        Song songItem = songRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Song not found this id: " + id));
+        songItem.setDelected(true);
+        songRepository.save(songItem);
+    }
+
+    @Override
+    public SongDTO getSongDTO(int id) {
+        Song songs = songRepository.findById(id).orElse(null);
+        if (songs != null) {
+            SongDTO songDTO = new SongDTO();
+
+            songDTO.setId(songs.getId());
+            songDTO.setName(songs.getName());
+            songDTO.setAuthor(songs.getAuthor());
+            songDTO.setDes(songs.getDes());
+            return songDTO;
+        }
         return null;
     }
 
     @Override
-    public void deleteSong(int id) {
-
+    public void updateSong(Song song) {
+        Song oldSong = songRepository.findById(song.getId()).orElse(null);
+        oldSong.setName(song.getName());
+        oldSong.setAuthor(song.getAuthor());
+        oldSong.setDes(song.getDes());
+        songRepository.save(oldSong);
     }
 }

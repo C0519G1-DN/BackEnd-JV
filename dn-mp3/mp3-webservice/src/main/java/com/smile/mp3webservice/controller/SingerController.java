@@ -29,7 +29,9 @@ public class SingerController {
     public ResponseEntity<?> addSong(@ModelAttribute SingerDTO data) throws IOException {
         try{
             MultipartFile iSinger = data.getImg_singer();
+
             File convertImgSinger = new File("D:\\Codegym-Module4\\FrontEnd-v2\\mp3-angular\\src\\assets\\"+iSinger.getOriginalFilename());
+
             iSinger.transferTo(convertImgSinger);
             singerService.saveSinger(data);
             Singer feedback = new Singer(data);
