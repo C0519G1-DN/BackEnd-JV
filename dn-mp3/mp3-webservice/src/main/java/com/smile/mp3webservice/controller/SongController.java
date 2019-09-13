@@ -16,30 +16,31 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*",allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SongController {
 
     @Autowired
     public SongService songService;
 
-    @PostMapping(value={"/upsong"}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = {"/upsong"}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addSong(@ModelAttribute SongDTO data) throws IOException {
-        try{MultipartFile fSong = data.getFile_song();
-            File convertFileSong = new File("E:\\IT\\IT-CodeGym\\4.Mod4\\MyRepository-C0519\\FrontEnd-Ng\\mp3-angular\\src\\assets\\"+fSong.getOriginalFilename());
+        try {
+            MultipartFile fSong = data.getFile_song();
+            File convertFileSong = new File("D:\\CODE GYM\\Module_4\\FrontEnd-v2\\mp3-angular\\src\\assets\\" + fSong.getOriginalFilename());
             fSong.transferTo(convertFileSong);
             MultipartFile iSong = data.getImg_song();
-            File convertImgSong = new File("E:\\IT\\IT-CodeGym\\4.Mod4\\MyRepository-C0519\\FrontEnd-Ng\\mp3-angular\\src\\assets\\"+iSong.getOriginalFilename());
+            File convertImgSong = new File("D:\\CODE GYM\\Module_4\\FrontEnd-v2\\mp3-angular\\src\\assets\\" + iSong.getOriginalFilename());
             iSong.transferTo(convertImgSong);
             songService.saveSong(data);
             Song feedback = new Song(data);
             return new ResponseEntity<Song>(feedback, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Wrong", HttpStatus.BAD_REQUEST);
         }
-        catch (Exception e){
-        return new ResponseEntity<>("Wrong", HttpStatus.BAD_REQUEST);
-    }}
+    }
 
-    @GetMapping( value = {"/getsongs"})
-    private ResponseEntity<?> getSongs(){
+    @GetMapping(value = {"/getsongs"})
+    private ResponseEntity<?> getSongs() {
         List<Song> songs = songService.getSongs();
         return ResponseEntity.ok(songs);
     }
