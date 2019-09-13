@@ -1,5 +1,6 @@
 package com.smile.mp3service.service.impl;
 
+import com.smile.mp3common.exception.ResourceNotFoundException;
 import com.smile.mp3dao.dto.SingerDTO;
 import com.smile.mp3dao.entity.Singer;
 import com.smile.mp3dao.entity.Song;
@@ -19,9 +20,11 @@ public class SingerServiceImpl implements SingerService {
     @Autowired
     SingerRepository singerRepository;
 
+
+
     @Override
     public List<Singer> getSingers() {
-        return singerRepository.findAll();
+        return singerRepository.findAllByDelectedIsFalse();
     }
 
     @Override
@@ -33,12 +36,24 @@ public class SingerServiceImpl implements SingerService {
         singer.setCreateDate(date);
         singer.setDelected(false);
         singerRepository.save((singer));
-
-
     }
 
     @Override
-    public Song getSinger(int theId) {
-        return null;
+    public Singer getSinger(int id) throws ResourceNotFoundException {
+        return singerRepository.findById(id)
+                .orElseThrow(()
+                        -> new ResourceNotFoundException("Singers not found this id: " + id));
     }
+
+//    @Override
+//    public Song getSinger(int theId) {
+//        return null;
+//    }
+
+    @Override
+    public void deleteSinger(int theId) {
+        singerRepository.deleteById(theId);
+    }
+
+
 }

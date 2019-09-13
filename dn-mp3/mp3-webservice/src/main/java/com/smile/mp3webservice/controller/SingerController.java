@@ -1,5 +1,6 @@
 package com.smile.mp3webservice.controller;
 
+import com.smile.mp3common.exception.ResourceNotFoundException;
 import com.smile.mp3dao.dto.SingerDTO;
 import com.smile.mp3dao.dto.SongDTO;
 import com.smile.mp3dao.entity.Singer;
@@ -28,7 +29,9 @@ public class SingerController {
     public ResponseEntity<?> addSong(@ModelAttribute SingerDTO data) throws IOException {
         try{
             MultipartFile iSinger = data.getImg_singer();
-            File convertImgSinger = new File("D:\\WorkSpace\\FrontEnd-v2\\mp3-angular\\src\\assets\\"+iSinger.getOriginalFilename());
+
+            File convertImgSinger = new File("D:\\Codegym-Module4\\FrontEnd-v2\\mp3-angular\\src\\assets\\"+iSinger.getOriginalFilename());
+
             iSinger.transferTo(convertImgSinger);
             singerService.saveSinger(data);
             Singer feedback = new Singer(data);
@@ -42,4 +45,17 @@ public class SingerController {
         List<Singer> singers= singerService.getSingers();
         return ResponseEntity.ok(singers);
     }
+
+    @GetMapping(value = "/singer/{id}")
+    public ResponseEntity<Singer> getOne(@PathVariable("id") int id) throws ResourceNotFoundException {
+        Singer singer =singerService.getSinger(id);
+        return ResponseEntity.ok(singer);
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") int id){
+        singerService.deleteSinger(id);
+        return ResponseEntity.ok(id);
+    }
+
 }
