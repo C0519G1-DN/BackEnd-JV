@@ -30,6 +30,7 @@ public class SingerController {
         try{
             MultipartFile iSinger = data.getImg_singer();
             File convertImgSinger = new File("E:\\IT\\IT-CodeGym\\4.Mod4\\MyRepository-C0519\\FrontEnd-Ng\\mp3-angular\\src\\assets\\"+iSinger.getOriginalFilename());
+
             iSinger.transferTo(convertImgSinger);
             singerService.saveSinger(data);
             Singer feedback = new Singer(data);
