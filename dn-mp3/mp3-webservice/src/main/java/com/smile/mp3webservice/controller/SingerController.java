@@ -52,10 +52,10 @@ public class SingerController {
         return ResponseEntity.ok(singer);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") int id){
+    @PutMapping(value = "/deleteSinger/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") int id) throws ResourceNotFoundException {
         singerService.deleteSinger(id);
-        return ResponseEntity.ok(id);
+        Singer singer =singerService.getSinger(id);
+        return new ResponseEntity<Singer>(singer, HttpStatus.OK);
     }
-
 }
