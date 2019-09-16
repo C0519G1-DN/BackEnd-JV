@@ -3,7 +3,6 @@ package com.smile.mp3service.service.impl;
 import com.smile.mp3common.exception.ResourceNotFoundException;
 import com.smile.mp3dao.dto.SingerDTO;
 import com.smile.mp3dao.entity.Singer;
-import com.smile.mp3dao.entity.Song;
 import com.smile.mp3dao.repository.SingerRepository;
 import com.smile.mp3service.service.SingerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +50,9 @@ public class SingerServiceImpl implements SingerService {
 //    }
 
     @Override
-    public void deleteSinger(int theId) {
-        singerRepository.deleteById(theId);
+    public Singer deleteSinger(int theId) {
+        Singer singer = singerRepository.findById(theId).orElse(null);
+        singer.setDelected(true);
+        return singerRepository.save(singer);
     }
-
-
 }
