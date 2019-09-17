@@ -14,8 +14,6 @@ public interface SingerService {
 
     void saveSinger(SingerDTO singerDTO) throws IOException;
 
-//    Song getSinger(int id);
-
     Singer getSinger(int id) throws ResourceNotFoundException;
 
     Singer deleteSinger(int theId);
