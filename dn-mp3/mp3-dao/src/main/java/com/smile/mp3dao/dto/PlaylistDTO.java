@@ -11,7 +11,6 @@ public class PlaylistDTO implements Serializable {
     private String des;
     private String username_create;
     private Date createDay;
-//    private boolean delected;
 
 
     public PlaylistDTO() {
@@ -23,7 +22,6 @@ public class PlaylistDTO implements Serializable {
         this.des = playlist.getDes();
         this.username_create = playlist.getUsername_create();
         this.createDay = playlist.getCreateDay();
-//        this.delected = playlist.getDelected();
     }
 
     public int getId() {
@@ -65,12 +63,4 @@ public class PlaylistDTO implements Serializable {
     public void setCreateDay(Date createDay) {
         this.createDay = createDay;
     }
-
-//    public boolean isDelected() {
-//        return delected;
-//    }
-//
-//    public void setDelected(boolean delected) {
-//        this.delected = delected;
-//    }
 }

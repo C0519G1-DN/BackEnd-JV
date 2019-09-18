@@ -2,16 +2,23 @@ package com.smile.mp3webservice.controller;
 
 import com.smile.mp3common.exception.ResourceNotFoundException;
 import com.smile.mp3dao.dto.PlaylistDTO;
+import com.smile.mp3dao.dto.SongDTO;
 import com.smile.mp3dao.entity.Playlist;
 import com.smile.mp3dao.entity.ReqAddSong;
+import com.smile.mp3dao.entity.Song;
+import com.smile.mp3dao.entity.User;
 import com.smile.mp3dao.repository.PlaylistRepository;
 import com.smile.mp3service.service.PlaylistService;
+import com.smile.mp3service.service.SongService;
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -23,20 +30,14 @@ public class PlaylistController {
 
     @Autowired
     PlaylistService playlistService;
+    @Autowired
+    SongService songService;
 
     @GetMapping(value = {""})
     public List<Playlist> allPlaylistDTO() {
         List<Playlist> getAllPlaylistsDTO = playlistService.getPlaylists();
         return getAllPlaylistsDTO;
     }
-    @PostMapping(value = {"/addsong"})
-    public ResponseEntity<?> addSongtoPlaylist(@RequestBody ReqAddSong reqAddSong) {
-        playlistService.savePlaylistWithSongs(reqAddSong.getIdPlaylist(),reqAddSong.getIdSong());
-//        System.out.println(idPlaylist);
-//        System.out.println(idSong);
-        return ResponseEntity.ok("ok");
-    }
-
 
     @GetMapping(value = {"/getoneplaylist/{id}"})
     public ResponseEntity<PlaylistDTO> getOnePlaylistDTO(@PathVariable int id) throws ResourceNotFoundException {
@@ -44,12 +45,30 @@ public class PlaylistController {
         return new ResponseEntity<PlaylistDTO>(onePlaylistDTO, HttpStatus.OK);
     }
 
-    @PutMapping(value = {"/updateplaylist/{id}"})
-    public ResponseEntity<PlaylistDTO> editPlaylist(@PathVariable int id, @RequestBody PlaylistDTO playlistDTO) {
-//        playlistDTO.setId(id);
+    @PostMapping(value = {"/songOfPlaylist"})
+    public Set<Song> getSongsOfPlaylist(@RequestBody int idPlaylist) throws ResourceNotFoundException {
+        Playlist playlist = playlistService.getOnePlaylist(idPlaylist);
+        Set<Song> songs = playlist.getSongs();
+//        List<SongDTO> songDTOS = new ArrayList<>();
+//        for (Song song : playlist.getSongs()) {
+//            SongDTO songDTO = new SongDTO();
+//            songDTO = songService.getSongDTO(song.getId());
+//            songDTOS.add(songDTO);
+//        }
+        return songs;
+    }
 
+    @PostMapping(value = {"/addsong"})
+    public ResponseEntity<?> addSongtoPlaylist(@RequestBody ReqAddSong reqAddSong) {
+        playlistService.savePlaylistWithSongs(reqAddSong.getIdPlaylist(), reqAddSong.getIdSong());
+//        System.out.println(idPlaylist);
+//        System.out.println(idSong);
+        return ResponseEntity.ok("ok");
+    }
+
+    @PutMapping(value = {"/updateplaylist"})
+    public ResponseEntity<PlaylistDTO> editPlaylist(@RequestBody PlaylistDTO playlistDTO) {
         playlistService.savePlaylist(playlistDTO);
-//        return ResponseEntity.ok(playlist);
         return new ResponseEntity<PlaylistDTO>(playlistDTO, HttpStatus.OK);
     }
 
@@ -59,8 +78,8 @@ public class PlaylistController {
         return ResponseEntity.ok(playlistDTO);
     }
 
-    @DeleteMapping(value = {"/deleteplaylist/{id}"})
-    public ResponseEntity<?> deletePlaylist(@PathVariable int id)
+    @PutMapping(value = {"/deleteplaylist"})
+    public ResponseEntity<?> deletePlaylist(@RequestBody int id)
             throws ResourceNotFoundException {
         playlistService.deletePlaylist(id);
         return ResponseEntity.ok(id);
