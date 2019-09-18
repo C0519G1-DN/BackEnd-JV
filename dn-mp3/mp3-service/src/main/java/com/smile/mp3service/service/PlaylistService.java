@@ -8,12 +8,13 @@ import java.util.List;
 
 public interface PlaylistService {
     void savePlaylist(PlaylistDTO playlistDTO);
+
     void savePlaylistWithSongs(int idPlaylist, int idSong);
 
-//    List<Playlist> findAllByDelectedIsFalse();
-//    List<PlaylistDTO> findAllByDelectedIsFalse();
     List<Playlist> getPlaylists();
+
     Playlist getOnePlaylist(int id) throws ResourceNotFoundException;
+
     PlaylistDTO getOnePlaylistDTO(int id) throws ResourceNotFoundException;
 
     void deletePlaylist(int id) throws ResourceNotFoundException;

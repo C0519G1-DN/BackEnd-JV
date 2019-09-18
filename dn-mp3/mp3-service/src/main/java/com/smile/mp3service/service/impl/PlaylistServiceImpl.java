@@ -41,21 +41,17 @@ public class PlaylistServiceImpl implements PlaylistService {
     public void savePlaylistWithSongs(int idPlaylist, int idSong) {
         Playlist thePlaylist = playlistRepository.findById(idPlaylist).orElse(null);
         Song theSong = songRepository.findById(idSong).orElse(null);
-        Set<Song> set = thePlaylist.getSongs();
-        set.add(theSong);
-        thePlaylist.setSongs(set);
+//        Set<Song> set = thePlaylist.getSongs();
+//        set.add(theSong);
+//        thePlaylist.setSongs(set);
+        thePlaylist.getSongs().add(theSong);
         playlistRepository.save(thePlaylist);
     }
 
-//    @Override
-//    public List<PlaylistDTO> findAllByDelectedIsFalse() {
-//        return playlistRepository.findAllByDelectedIsFalse();
-//    }
-@Override
-public List<Playlist> getPlaylists(){
-        return playlistRepository.findAll();
-}
-
+    @Override
+    public List<Playlist> getPlaylists() {
+        return playlistRepository.findAllByDelectedIsFalse();
+    }
 
     @Override
     public Playlist getOnePlaylist(int id) throws ResourceNotFoundException {
