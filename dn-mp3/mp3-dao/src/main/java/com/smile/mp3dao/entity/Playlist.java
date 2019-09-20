@@ -8,7 +8,7 @@ import java.util.Set;
 @Entity
 @Table(name = "playlist02")
 
-public class Playlist {
+public class Playlist extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

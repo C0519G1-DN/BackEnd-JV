@@ -57,17 +57,21 @@ public class SingerController {
         return ResponseEntity.ok(singer);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") int id) {
+
+    @PutMapping(value = "/deleteSinger/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") int id) throws ResourceNotFoundException {
         singerService.deleteSinger(id);
-        return ResponseEntity.ok(id);
+        Singer singer =singerService.getSinger(id);
+        return new ResponseEntity<Singer>(singer, HttpStatus.OK);
     }
+
 
     @PostMapping(value = "/searchSinger")
     public ResponseEntity<?> searchSinger(@RequestBody SearchSingerDTO nameSinger) throws ResourceNotFoundException {
         List<Singer> singers = singerService.getName(nameSinger.getNameSinger());
         return ResponseEntity.ok(singers);
     }
+
 }
 
 

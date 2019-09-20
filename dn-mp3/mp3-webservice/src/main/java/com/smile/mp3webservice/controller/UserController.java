@@ -1,6 +1,7 @@
 package com.smile.mp3webservice.controller;
 
 import com.smile.mp3dao.dto.UserDTO;
+import com.smile.mp3dao.entity.UpdatePassword;
 import com.smile.mp3dao.entity.User;
 import com.smile.mp3dao.repository.UserRepository;
 import com.smile.mp3service.service.UserService;
@@ -19,6 +20,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +30,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "*",allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     @Autowired
@@ -47,28 +49,28 @@ public class UserController {
     private AuthenticationManager authenticationManager;
 
 
-    @GetMapping(value={"/update/{id}"})
+    @GetMapping(value = {"/update/{id}"})
     public ResponseEntity<UserDTO> myUserDTO(@PathVariable int id) {
         UserDTO user = userService.getUserDTO(id);
         return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
     }
 
-    @PutMapping(value={"/update/{id}"})
+    @PutMapping(value = {"/update/{id}"})
     public ResponseEntity<?> myUser(@PathVariable int id, @RequestBody User myuser) {
         myuser.setPassword(userService.getUser(id).getPassword());
-            userService.updateUser(myuser);
-            return ResponseEntity.ok(myuser);
+        userService.updateUser(myuser);
+        return ResponseEntity.ok(myuser);
     }
 
-    @PostMapping(value={"/register"})
-    public ResponseEntity<?> register(@RequestBody User myuser ) {
-        if(userRepository.countByUsernameOrEmail(myuser.getUsername(),myuser.getEmail())>0) {
+    @PostMapping(value = {"/register"})
+    public ResponseEntity<?> register(@RequestBody User myuser) {
+        if (userRepository.countByUsernameOrEmail(myuser.getUsername(), myuser.getEmail()) > 0) {
             HashMap<String, String> messeages = new HashMap<>();
             if (userRepository.countByUsername(myuser.getUsername()) > 0) {
-                messeages.put("username","Username is existing");
+                messeages.put("username", "Username is existing");
             }
             if (userRepository.countByEmail(myuser.getEmail()) > 0) {
-                messeages.put("email","Email is existing");
+                messeages.put("email", "Email is existing");
             }
             return new ResponseEntity<HashMap>(messeages, HttpStatus.BAD_REQUEST);
         }
@@ -77,7 +79,7 @@ public class UserController {
     }
 
 
-//    @PostMapping("/register")
+    //    @PostMapping("/register")
 //    public ResponseEntity<?> createAccounts(@Valid @RequestBody User myuser, BindingResult bindingResult) {
 //        if (bindingResult.hasErrors()) {
 //            return new ResponseEntity<List>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
@@ -86,30 +88,52 @@ public class UserController {
 //        return ResponseEntity.ok(myuser);
 //    }
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(value={"/admin"})
+    @GetMapping(value = {"/admin"})
     public ResponseEntity<?> getforadmin() {
 //         Object user= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<User> users = userService.getUsers();
         return ResponseEntity.ok(users);
     }
 
-    @PostMapping(value="/login")
-    public ResponseEntity<?> login(@RequestBody User user ) throws Exception {
-            try {
-                Authentication authentication = authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
-                );
-                System.out.println("haha");
-                String jwtToken = jwtTokenUtil.generateToken(authentication);
-                System.out.println(jwtToken);
-                int id = userDetailsService.getIdByUsername(user.getUsername());
-                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                return new ResponseEntity<>(new JwtResponse(jwtToken, userDetails.getUsername(), id), HttpStatus.OK);
-            } catch (DisabledException e) {
-                throw new Exception("USER_DISABLED", e);
-            } catch (BadCredentialsException e) {
-                throw new Exception("INVALID_CREDENTIALS", e);
-            }
+    @PostMapping(value = "/login")
+    public ResponseEntity<?> login(@RequestBody User user) throws Exception {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+            );
+            System.out.println("haha");
+            String jwtToken = jwtTokenUtil.generateToken(authentication);
+            System.out.println(jwtToken);
+            int id = userDetailsService.getIdByUsername(user.getUsername());
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return new ResponseEntity<>(new JwtResponse(jwtToken, userDetails.getUsername(), id), HttpStatus.OK);
+        } catch (DisabledException e) {
+            throw new Exception("USER_DISABLED", e);
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID_CREDENTIALS", e);
+        }
     }
 
+    @PutMapping({"/update-password/{id}"})
+    public ResponseEntity<?> changePassword(@PathVariable("id") int id,
+                                            @RequestBody UpdatePassword updatePassword) {
+        User user = userService.getUser(id);
+        if (user != null) {
+            if (BCrypt.checkpw(updatePassword.getCurrentPassword(), user.getPassword())) {
+                user.setPassword(updatePassword.getNewPassword());
+                userService.updatePassword(user);
+                return new ResponseEntity<>("{\"text\":\"Successful\"}", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("{\"text\":\"NotCompare\"}", HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>("{\"text\":\"NotFound\"}", HttpStatus.OK);
+
+    }
+
+    @GetMapping("/getUser/{id}")
+    public ResponseEntity<?> getUser(@PathVariable("id") int id){
+        User user = userService.getUser(id);
+        return ResponseEntity.ok(user);
+    }
 }
