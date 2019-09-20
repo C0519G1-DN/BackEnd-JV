@@ -11,6 +11,8 @@ public interface UserService {
     List<User> getUsers();
 //    List<UserDTO> getUsers2();
 
+    User updatePassword(User user);
+
     void saveUser(User user);
     void updateUser(User user);
 
