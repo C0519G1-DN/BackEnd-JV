@@ -58,14 +58,6 @@ public class PlaylistController {
         return songs;
     }
 
-    @PostMapping(value = {"/addsong"})
-    public ResponseEntity<?> addSongtoPlaylist(@RequestBody ReqAddSong reqAddSong) {
-        playlistService.savePlaylistWithSongs(reqAddSong.getIdPlaylist(), reqAddSong.getIdSong());
-//        System.out.println(idPlaylist);
-//        System.out.println(idSong);
-        return ResponseEntity.ok("ok");
-    }
-
     @PutMapping(value = {"/updateplaylist"})
     public ResponseEntity<PlaylistDTO> editPlaylist(@RequestBody PlaylistDTO playlistDTO) {
         playlistService.savePlaylist(playlistDTO);
@@ -75,14 +67,25 @@ public class PlaylistController {
     @PostMapping(value = {"/createplaylist"})
     public ResponseEntity<PlaylistDTO> createPlaylist(@RequestBody PlaylistDTO playlistDTO) {
         playlistService.savePlaylist(playlistDTO);
-        return ResponseEntity.ok(playlistDTO);
+        return new ResponseEntity<>(playlistDTO, HttpStatus.OK);
     }
 
     @PutMapping(value = {"/deleteplaylist"})
     public ResponseEntity<?> deletePlaylist(@RequestBody int id)
             throws ResourceNotFoundException {
         playlistService.deletePlaylist(id);
-        return ResponseEntity.ok(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
+    @PostMapping(value = {"/addsong"})
+    public ResponseEntity<?> addSongtoPlaylist(@RequestBody ReqAddSong reqAddSong) {
+        playlistService.savePlaylistWithSongs(reqAddSong.getIdPlaylist(), reqAddSong.getIdSong());
+        return new ResponseEntity<ReqAddSong>(reqAddSong, HttpStatus.OK);
+    }
+
+    @PostMapping(value = {"/deletesonginplaylist"})
+    public ResponseEntity<?> deletesonginplaylist (@RequestBody ReqAddSong reqAddSong){
+        playlistService.deleteSongInPlaylist(reqAddSong.getIdPlaylist(),reqAddSong.getIdSong());
+        return new ResponseEntity<ReqAddSong>(reqAddSong, HttpStatus.OK);
+    }
 }

@@ -11,6 +11,8 @@ public interface PlaylistService {
 
     void savePlaylistWithSongs(int idPlaylist, int idSong);
 
+    void deleteSongInPlaylist(int idPlaylist, int idSong);
+
     List<Playlist> getPlaylists();
 
     Playlist getOnePlaylist(int id) throws ResourceNotFoundException;
