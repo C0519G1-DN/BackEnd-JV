@@ -29,6 +29,7 @@ public class SingerController {
     public ResponseEntity<?> addSong(@ModelAttribute SingerDTO data) throws IOException {
         try{
             MultipartFile iSinger = data.getImg_singer();
+
             File convertImgSinger = new File("E:\\IT\\IT-CodeGym\\4.Mod4\\MyRepository-C0519\\FrontEnd-Ng\\mp3-angular\\src\\assets\\"+iSinger.getOriginalFilename());
 
             iSinger.transferTo(convertImgSinger);
@@ -51,10 +52,10 @@ public class SingerController {
         return ResponseEntity.ok(singer);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") int id){
+    @PutMapping(value = "/deleteSinger/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") int id) throws ResourceNotFoundException {
         singerService.deleteSinger(id);
-        return ResponseEntity.ok(id);
+        Singer singer =singerService.getSinger(id);
+        return new ResponseEntity<Singer>(singer, HttpStatus.OK);
     }
-
 }

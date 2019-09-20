@@ -26,6 +26,7 @@ public class SongController {
     @PostMapping(value = {"/upsong"}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addSong(@ModelAttribute SongDTO data) throws IOException {
 
+
         try{MultipartFile fSong = data.getFile_song();
             File convertFileSong = new File(AAA+fSong.getOriginalFilename());
             fSong.transferTo(convertFileSong);
