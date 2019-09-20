@@ -3,6 +3,7 @@ package com.smile.mp3webservice.controller;
 
 import com.smile.mp3common.exception.ResourceNotFoundException;
 import com.smile.mp3dao.dto.SongDTO;
+import com.smile.mp3dao.entity.ReqAddSinger;
 import com.smile.mp3dao.entity.Song;
 import com.smile.mp3service.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SongController {
-    String AAA= "E:\\IT\\IT-CodeGym\\4.Mod4\\MyRepository-C0519\\FrontEnd-Ng\\mp3-angular\\src\\assets\\";
+    String AAA= "D:\\Workspace\\module4_mp3_new\\FrontEnd-v2\\mp3-angular\\src\\assets\\";
     @Autowired
     public SongService songService;
 
@@ -49,12 +50,6 @@ public class SongController {
         return ResponseEntity.ok(songs);
     }
 
-    @DeleteMapping(value = {"/deleteSong/{id}"})
-    public ResponseEntity<?> deletePlaylist(@PathVariable int id)
-            throws ResourceNotFoundException {
-        songService.deleteSong(id);
-        return ResponseEntity.ok(id);
-    }
 
     @GetMapping(value = {"/getIdSong/{id}"})
     public ResponseEntity<Song> getSongDTO(@PathVariable int id) throws ResourceNotFoundException {
@@ -66,5 +61,17 @@ public class SongController {
     public ResponseEntity<?> editSong(@RequestBody Song song) {
         songService.updateSong(song);
         return ResponseEntity.ok("okay");
+    }
+
+    @PutMapping(value = {"/deleteSong"})
+    public ResponseEntity<?> deletePlaylist(@RequestBody int id) throws ResourceNotFoundException {
+        songService.deleteSong(id);
+        return ResponseEntity.ok(id);
+    }
+
+    @PostMapping(value = "/addSingerToSong")
+    public  ResponseEntity<?> addSingerToSong (@RequestBody ReqAddSinger reqAddSinger){
+        songService.saveSongWithSinger(reqAddSinger.getIdSong(),reqAddSinger.getIdSinger());
+        return ResponseEntity.ok("ok");
     }
 }
