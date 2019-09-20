@@ -19,6 +19,7 @@ public interface SingerService {
 //    Song getSinger(int id);
 
     Singer getSinger(int id) throws ResourceNotFoundException;
+    List<Singer> getName(String searchName);
 
     void deleteSinger(int theId);
 

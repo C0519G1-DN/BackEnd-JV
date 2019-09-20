@@ -47,14 +47,14 @@ public class PlaylistServiceImpl implements PlaylistService {
         playlistRepository.save(thePlaylist);
     }
 
-//    @Override
+    //    @Override
 //    public List<PlaylistDTO> findAllByDelectedIsFalse() {
 //        return playlistRepository.findAllByDelectedIsFalse();
 //    }
-@Override
-public List<Playlist> getPlaylists(){
+    @Override
+    public List<Playlist> getPlaylists() {
         return playlistRepository.findAll();
-}
+    }
 
 
     @Override

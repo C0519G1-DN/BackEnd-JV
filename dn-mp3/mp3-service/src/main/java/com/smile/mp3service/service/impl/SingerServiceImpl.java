@@ -55,5 +55,10 @@ public class SingerServiceImpl implements SingerService {
         singerRepository.deleteById(theId);
     }
 
+    @Override
+    public List<Singer> getName(String searchName){
+        return singerRepository.findAllByName(searchName);
+    }
+
 
 }

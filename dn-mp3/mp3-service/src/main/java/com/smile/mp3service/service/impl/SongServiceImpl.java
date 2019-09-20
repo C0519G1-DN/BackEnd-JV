@@ -2,7 +2,9 @@ package com.smile.mp3service.service.impl;
 
 import com.smile.mp3common.exception.ResourceNotFoundException;
 import com.smile.mp3dao.dto.SongDTO;
+import com.smile.mp3dao.entity.Singer;
 import com.smile.mp3dao.entity.Song;
+import com.smile.mp3dao.repository.SingerRepository;
 import com.smile.mp3dao.repository.SongRepository;
 import com.smile.mp3service.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +14,16 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Service
-public class SongServiceImpl implements SongService {
+public class SongServiceImpl implements SongService{
 
     @Autowired
     private SongRepository songRepository;
 
+    @Autowired
+    private SingerRepository singerRepository;
 
     @Override
     public List<Song> getSongs() {
@@ -36,9 +41,18 @@ public class SongServiceImpl implements SongService {
         theSong.setView_song(0);
         theSong.setCreateDate(date);
         theSong.setDelected(false);
-
         songRepository.save(theSong);
 
+    }
+
+    @Override
+    public void saveSongWithSinger(int idSong, int idSinger) {
+        Song theSong = songRepository.findById(idSong).orElse(null);
+        Singer theSinger = singerRepository.findById(idSinger).orElse(null);
+        Set<Singer> set = theSong.getSingers();
+        set.add(theSinger);
+        theSong.setSingers(set);
+        songRepository.save(theSong);
     }
 
     @Override
@@ -46,6 +60,7 @@ public class SongServiceImpl implements SongService {
 
         return songRepository.findById(id).orElse(null);
     }
+
 
     @Override
     public void deleteSong(int id) throws ResourceNotFoundException {
