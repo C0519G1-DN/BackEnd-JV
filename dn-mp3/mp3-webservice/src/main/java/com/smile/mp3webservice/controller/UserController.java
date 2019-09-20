@@ -85,7 +85,7 @@ public class UserController {
 //        userService.saveUser(myuser);
 //        return ResponseEntity.ok(myuser);
 //    }
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value={"/admin"})
     public ResponseEntity<?> getforadmin() {
 //         Object user= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
