@@ -44,10 +44,6 @@ public class SingerServiceImpl implements SingerService {
                         -> new ResourceNotFoundException("Singers not found this id: " + id));
     }
 
-//    @Override
-//    public Song getSinger(int theId) {
-//        return null;
-//    }
 
     @Override
     public Singer deleteSinger(int theId) {
@@ -59,7 +55,7 @@ public class SingerServiceImpl implements SingerService {
 
     @Override
     public List<Singer> getName(String searchName){
-        return singerRepository.findAllByName(searchName);
+        return singerRepository.findAllByNameContaining(searchName);
     }
 
 }
