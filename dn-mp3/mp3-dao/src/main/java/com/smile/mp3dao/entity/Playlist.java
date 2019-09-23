@@ -8,7 +8,7 @@ import java.util.Set;
 @Entity
 @Table(name = "playlist02")
 
-public class Playlist {
+public class Playlist extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,6 +25,7 @@ public class Playlist {
             joinColumns=@JoinColumn(name="playlist_id", referencedColumnName="id"),
             inverseJoinColumns=@JoinColumn(name="song_id", referencedColumnName="id"))
     private Set<Song> songs = new HashSet<Song>();
+
 
     public Playlist() {
     }
