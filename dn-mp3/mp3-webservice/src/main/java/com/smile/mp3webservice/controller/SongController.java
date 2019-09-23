@@ -46,8 +46,8 @@ public class SongController {
         return ResponseEntity.ok(songs);
     }
 
-    @DeleteMapping(value = {"/deleteSong/{id}"})
-    public ResponseEntity<?> deletePlaylist(@PathVariable int id)
+    @PutMapping(value = {"/deleteSong"})
+    public ResponseEntity<?> deletePlaylist(@RequestBody int id)
             throws ResourceNotFoundException {
         songService.deleteSong(id);
         return ResponseEntity.ok(id);
@@ -62,6 +62,6 @@ public class SongController {
     @PutMapping(value = {"/updateSong"})
     public ResponseEntity<?> editSong(@RequestBody Song song) {
         songService.updateSong(song);
-        return ResponseEntity.ok("okay");
+        return new ResponseEntity<Song>(song, HttpStatus.OK);
     }
 }

@@ -22,7 +22,7 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public List<Song> getSongs() {
-        return songRepository.findAll();
+        return songRepository.findAllByDelectedIsFalse();
     }
 
     @Override
