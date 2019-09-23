@@ -52,4 +52,11 @@ public class SingerServiceImpl implements SingerService {
         singer.setDelected(true);
         return singerRepository.save(singer);
     }
+
+
+    @Override
+    public List<Singer> getName(String searchName){
+        return singerRepository.findAllByNameContaining(searchName);
+    }
+
 }

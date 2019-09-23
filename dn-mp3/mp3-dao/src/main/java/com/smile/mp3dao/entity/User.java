@@ -34,11 +34,26 @@ public class User {
 //    @Unique(message = "Username is already exit")
     private String username;
 
-    @JsonIgnore
+//    @JsonIgnore
     @Column(length = 200)
     private String password;
 
     private Boolean delected;
+
+    public User() {
+    }
+
+    public User(int id, String name, int age, String gender, String phone, String email, String username, String password, Boolean delected) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.phone = phone;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.delected = delected;
+    }
 
     public int getId() {
         return id;
