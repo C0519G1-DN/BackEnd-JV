@@ -2,10 +2,13 @@ package com.smile.mp3service.service.impl;
 
 import com.smile.mp3common.exception.ResourceNotFoundException;
 import com.smile.mp3dao.dto.SongDTO;
+import com.smile.mp3dao.entity.LikeSong;
 import com.smile.mp3dao.entity.Singer;
 import com.smile.mp3dao.entity.Song;
+import com.smile.mp3dao.entity.User;
 import com.smile.mp3dao.repository.SingerRepository;
 import com.smile.mp3dao.repository.SongRepository;
+import com.smile.mp3dao.repository.UserRepository;
 import com.smile.mp3service.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,8 @@ public class SongServiceImpl implements SongService{
 
     @Autowired
     private SingerRepository singerRepository;
+
+    @Autowired private UserRepository userRepository;
 
     @Override
     public List<Song> getSongs() {
@@ -102,4 +107,5 @@ public class SongServiceImpl implements SongService{
         oldSong.setDes(song.getDes());
         songRepository.save(oldSong);
     }
+
 }
