@@ -27,7 +27,7 @@ public class SongServiceImpl implements SongService{
 
     @Override
     public List<Song> getSongs() {
-        return songRepository.findAll();
+        return songRepository.findAllByDelectedIsFalse();
     }
 
     @Override
@@ -41,6 +41,15 @@ public class SongServiceImpl implements SongService{
         theSong.setView_song(0);
         theSong.setCreateDate(date);
         theSong.setDelected(false);
+
+        Singer theSinger = singerRepository.findByName("Unknowing");
+                if(theSinger == null){
+                    theSinger = new Singer("Unknowing", "https://gspzone.hvazone.com/sodiz/adminlte/img/unknown-user.png");
+                    singerRepository.save(theSinger);}
+        Set<Singer> set = theSong.getSingers();
+        set.add(theSinger);
+        theSong.setSingers(set);
+
         songRepository.save(theSong);
 
     }

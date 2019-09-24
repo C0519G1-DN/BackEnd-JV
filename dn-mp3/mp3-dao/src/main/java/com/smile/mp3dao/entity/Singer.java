@@ -40,6 +40,10 @@ public class Singer {
 
     public Singer() {
     }
+    public Singer(String name, String link_img_singer) {
+               this.name= name;
+               this.link_img_singer = link_img_singer;
+    }
 
     public Singer(int id, String name, String des, String link_img_singer, Date createDate, int user_create, boolean delected, List<Song> songs) {
         this.id = id;

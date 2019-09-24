@@ -45,6 +45,12 @@ public class PlaylistController {
         return new ResponseEntity<PlaylistDTO>(onePlaylistDTO, HttpStatus.OK);
     }
 
+    @GetMapping(value = {"/getPlaylistToListen/{id}"})
+    public ResponseEntity<Playlist> getOnePlaylist(@PathVariable int id) throws ResourceNotFoundException {
+        Playlist onePlaylist = playlistService.getOnePlaylist(id);
+        return new ResponseEntity<Playlist>(onePlaylist, HttpStatus.OK);
+    }
+
     @PostMapping(value = {"/songOfPlaylist"})
     public Set<Song> getSongsOfPlaylist(@RequestBody int idPlaylist) throws ResourceNotFoundException {
         Playlist playlist = playlistService.getOnePlaylist(idPlaylist);
