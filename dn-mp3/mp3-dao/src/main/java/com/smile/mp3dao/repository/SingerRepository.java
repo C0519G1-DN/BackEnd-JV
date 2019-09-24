@@ -10,4 +10,6 @@ import java.util.List;
 public interface SingerRepository extends JpaRepository<Singer, Integer> {
     List<Singer> findAllByDelectedIsFalse();
     List<Singer> findAllByName(String searchName);
+
+
 }
