@@ -12,5 +12,4 @@ public interface SingerRepository extends JpaRepository<Singer, Integer> {
     List<Singer> findAllByName(String searchName);
     List<Singer> findAllByNameContaining(String searchName);
     Singer findByName(String name);
-
 }
