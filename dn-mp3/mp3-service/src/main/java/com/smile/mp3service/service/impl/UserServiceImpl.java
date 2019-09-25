@@ -22,8 +22,6 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
 
-
-
 //    @Override
 //    public List<UserDTO> getUsers2() {
 //        List<User> a= userRepository.findAll();
@@ -49,8 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User theUser)
-    {
+    public void saveUser(User theUser) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
         theUser.setPassword(passwordEncoder.encode(theUser.getPassword()));
 
@@ -77,9 +74,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(int theId) {
-        
+    public String getEmailUser(String email) {
+        User oldEmail = userRepository.findByEmail(email);
+        if (oldEmail != null) {
+            return oldEmail.getEmail();
+        } else {
+            return null;
+        }
     }
 
+    @Override
+    public void deleteUser(int theId) {
 
+    }
+
+    @Override
+    public User getUserbyEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void resetPass(String email, String newPass) {
+        User theUser = userRepository.findByEmail(email);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
+        theUser.setPassword(passwordEncoder.encode(newPass));
+        userRepository.save(theUser);
+
+    }
 }
