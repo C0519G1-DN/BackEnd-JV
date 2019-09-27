@@ -20,4 +20,6 @@ public interface SongService {
     SongDTO getSongDTO(int id);
 
     void updateSong(Song song);
+
+    List<Song> getTopViewSong();
 }
