@@ -9,7 +9,9 @@ import java.util.List;
 @Repository
 public interface SingerRepository extends JpaRepository<Singer, Integer> {
     List<Singer> findAllByDelectedIsFalse();
-    List<Singer> findAllByName(String searchName);
+//    List<Singer> findAllByName(String searchName);
     List<Singer> findAllByNameContaining(String searchName);
     Singer findByName(String name);
+    Singer findByDelectedIsFalseAndId(int id);
+
 }

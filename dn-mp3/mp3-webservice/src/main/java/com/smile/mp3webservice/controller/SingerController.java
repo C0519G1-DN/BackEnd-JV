@@ -2,10 +2,13 @@ package com.smile.mp3webservice.controller;
 
 import com.smile.mp3common.exception.ResourceNotFoundException;
 import com.smile.mp3dao.dto.SearchSingerDTO;
+import com.smile.mp3dao.dto.SingerCommentDTO;
 import com.smile.mp3dao.dto.SingerDTO;
 import com.smile.mp3dao.dto.SongDTO;
 import com.smile.mp3dao.entity.Singer;
+import com.smile.mp3dao.entity.SingerComment;
 import com.smile.mp3dao.entity.Song;
+import com.smile.mp3service.service.SingerCommentService;
 import com.smile.mp3service.service.SingerService;
 import com.smile.mp3service.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,9 @@ public class SingerController {
 
     @Autowired
     public SongService songService;
+    @Autowired
+    public SingerCommentService singerCommentService;
+
 
     @PostMapping(value = {"/upsinger"}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addSong(@ModelAttribute SingerDTO data) throws IOException {
@@ -70,6 +76,17 @@ public class SingerController {
     public ResponseEntity<?> searchSinger(@RequestBody SearchSingerDTO nameSinger) throws ResourceNotFoundException {
         List<Singer> singers = singerService.getName(nameSinger.getNameSinger());
         return ResponseEntity.ok(singers);
+    }
+
+    @GetMapping(value = "/getCommentSinger/{id}")
+    public ResponseEntity<?> getSingerComment(@PathVariable("id") int id){
+        List<SingerComment> singerComments = singerCommentService.getComment(id);
+        return new ResponseEntity<List<SingerComment>>(singerComments, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/postCommentSinger")
+    public void postSingComment(@RequestBody SingerCommentDTO singerCommentDTO){
+      singerCommentService.postComment(singerCommentDTO);
     }
 
 }
