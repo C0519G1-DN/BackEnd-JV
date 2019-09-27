@@ -9,6 +9,8 @@ import java.util.List;
 public interface PlaylistService {
     void savePlaylist(PlaylistDTO playlistDTO);
 
+    void editPlaylist(PlaylistDTO playlistDTO);
+
     void savePlaylistWithSongs(int idPlaylist, int idSong);
 
     void deleteSongInPlaylist(int idPlaylist, int idSong);
