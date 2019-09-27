@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -23,6 +24,7 @@ public class PlaylistServiceImpl implements PlaylistService {
     @Autowired
     SongRepository songRepository;
 
+//    @Transactional
     @Override
     public void savePlaylist(PlaylistDTO playlistDTO) {
         Date date = new Date();
@@ -31,9 +33,23 @@ public class PlaylistServiceImpl implements PlaylistService {
         playlist.setName(playlistDTO.getName());
         playlist.setDes(playlistDTO.getDes());
         playlist.setUsername_create(playlistDTO.getUsername_create());
+        System.out.println(playlistDTO.getUsername_create());
         playlist.setCreateDay(date);
         playlist.setDelected(false);
+        playlistRepository.save(playlist);
+    }
 
+    @Override
+    public void editPlaylist(PlaylistDTO playlistDTO) {
+        Date date = new Date();
+        Playlist playlist = playlistRepository.findByIdAndDelectedIsFalse(playlistDTO.getId());
+        playlist.setId(playlistDTO.getId());
+        playlist.setName(playlistDTO.getName());
+        playlist.setDes(playlistDTO.getDes());
+        playlist.setUsername_create(playlistDTO.getUsername_create());
+        System.out.println(playlistDTO.getUsername_create());
+        playlist.setCreateDay(date);
+        playlist.setDelected(false);
         playlistRepository.save(playlist);
     }
 
@@ -83,5 +99,10 @@ public class PlaylistServiceImpl implements PlaylistService {
                 .orElseThrow(() -> new ResourceNotFoundException("Playlists not found this id: " + id));
         playlist.setDelected(true);
         playlistRepository.save(playlist);
+    }
+
+    @Override
+    public List<Playlist> getAllPlaylistByName(String namePlaylist) {
+        return playlistRepository.findAllByNameContainingAndDelectedIsFalse(namePlaylist);
     }
 }

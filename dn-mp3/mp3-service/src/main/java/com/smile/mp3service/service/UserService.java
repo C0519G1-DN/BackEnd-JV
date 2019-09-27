@@ -20,5 +20,13 @@ public interface UserService {
     User getUser(int id);
 
 
+
+    String getEmailUser(String email);
     void deleteUser(int id);
+
+    User getUserbyEmail(String email);
+
+    void resetPass(String email, String newPass);
+
+
 }

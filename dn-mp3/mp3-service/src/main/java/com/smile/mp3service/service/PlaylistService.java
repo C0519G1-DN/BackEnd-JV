@@ -9,6 +9,8 @@ import java.util.List;
 public interface PlaylistService {
     void savePlaylist(PlaylistDTO playlistDTO);
 
+    void editPlaylist(PlaylistDTO playlistDTO);
+
     void savePlaylistWithSongs(int idPlaylist, int idSong);
 
     void deleteSongInPlaylist(int idPlaylist, int idSong);
@@ -20,4 +22,6 @@ public interface PlaylistService {
     PlaylistDTO getOnePlaylistDTO(int id) throws ResourceNotFoundException;
 
     void deletePlaylist(int id) throws ResourceNotFoundException;
+
+    List<Playlist> getAllPlaylistByName(String namePlaylist);
 }
