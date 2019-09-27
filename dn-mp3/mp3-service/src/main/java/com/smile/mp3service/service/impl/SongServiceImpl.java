@@ -11,6 +11,7 @@ import com.smile.mp3dao.repository.SongRepository;
 import com.smile.mp3dao.repository.UserRepository;
 import com.smile.mp3service.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -106,6 +107,11 @@ public class SongServiceImpl implements SongService{
         oldSong.setAuthor(song.getAuthor());
         oldSong.setDes(song.getDes());
         songRepository.save(oldSong);
+    }
+
+    @Override
+    public List<Song> getTopViewSong() {
+        return songRepository.topViewSong(new PageRequest(0, 4));
     }
 
 }

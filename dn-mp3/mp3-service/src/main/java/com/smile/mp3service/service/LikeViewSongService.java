@@ -1,11 +1,8 @@
 package com.smile.mp3service.service;
 
-import com.smile.mp3dao.entity.LikeSong;
-
 import java.util.List;
-import java.util.Map;
 
-public interface   LikeSongService {
+public interface LikeViewSongService {
 
     void likeSong(String username, int idSong, boolean isLike);
 
@@ -14,4 +11,8 @@ public interface   LikeSongService {
 //    List<LikeSong> getTopLike();
 
     List<Object[]> getTotalLikeSong();
+
+    int getLikeOfSong(int idSong);
+
+    int viewSong(int idSong);
 }
