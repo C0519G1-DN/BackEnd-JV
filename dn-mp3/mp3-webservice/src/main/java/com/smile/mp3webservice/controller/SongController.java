@@ -114,10 +114,10 @@ public class SongController {
 
 
     @PostMapping("/searchSongName")
-    public ResponseEntity<?> getSongName(@RequestBody String nameSong){
+    public ResponseEntity<?> getSongName(@RequestBody String nameSong) {
         List<Song> list = songService.searchSongName(nameSong);
         return ResponseEntity.ok(list);
-
+    }
     @PostMapping(value = "/getViewSong")
     public ResponseEntity<?> getViewSong(@RequestBody int idSong){
         int viewSong = likeViewSongService.viewSong(idSong);
