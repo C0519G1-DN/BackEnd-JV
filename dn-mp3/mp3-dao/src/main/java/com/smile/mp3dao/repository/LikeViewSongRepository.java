@@ -17,29 +17,23 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public interface LikeSongRepository extends JpaRepository<LikeSong, Integer> {
+public interface LikeViewSongRepository extends JpaRepository<LikeSong, Integer> {
 
     LikeSong findByUserAndSong(User user, Song song);
 
     List<Song> findAllByLikedTrueOrderBySongId();
-//    List<LikeSong> findAllBylAndLikedTrue
 
 //    @Query
 //    select song_id, count(liked) as 'amount_like' from mod4.like_song
 //    group by song_id
 //    limit 3;
 
-//    @Query(value = "select e from LikeSong e")
-
-//    @Query(value = "select e from LikeSong e group by e.song desc limit :limit", nativeQuery = true)
-//    List<LikeSong> findAllByUserAndSong(@Param("limit") int limit);
-
-    @Query(value = "select e from LikeSong e group by e.song")
-    List<LikeSong> findAllByUserAndSong(PageRequest pageRequest);
-
-    //    @Query(value = "select e.song, count(e.liked) from LikeSong e group by e.song")
-//    HashMap<Integer, Integer> totalLikeSong();
-    @Query(value = "select e.song, count(e.liked) from LikeSong e group by e.song")
+    @Query(value = "select e.song, count(e.liked) from LikeSong e where (e.liked = 1) group by e.song order by count(e.liked) desc ")
     List<Object[]> totalLikeSong(PageRequest pageRequest);
+
+    @Query(value = "select count(e.liked) from LikeSong e where (e.song = :song1 and e.liked = 1)")
+    int getLikeOfSong(@Param("song1") Song song1);
+
+//   cach2: int countByLikedIsTrueAndSong_Id(int idSong);
 }
 

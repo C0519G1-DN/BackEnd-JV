@@ -23,5 +23,9 @@ public interface SongService {
 
     void updateSong(Song song);
 
+
     List<Song> searchSongName(String songName);
+
+    List<Song> getTopViewSong();
+
 }
