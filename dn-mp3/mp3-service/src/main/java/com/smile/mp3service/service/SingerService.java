@@ -3,6 +3,7 @@ package com.smile.mp3service.service;
 import com.smile.mp3common.exception.ResourceNotFoundException;
 import com.smile.mp3dao.dto.SingerDTO;
 import com.smile.mp3dao.entity.Singer;
+import com.smile.mp3dao.entity.SingerComment;
 
 import java.io.IOException;
 import java.util.List;
