@@ -110,6 +110,11 @@ public class SongServiceImpl implements SongService{
     }
 
     @Override
+
+    public List<Song> searchSongName(String songName) {
+        return songRepository.findAllByNameContainingAndDelectedIsFalse(songName);
+    }
+
     public List<Song> getTopViewSong() {
         return songRepository.topViewSong(new PageRequest(0, 4));
     }

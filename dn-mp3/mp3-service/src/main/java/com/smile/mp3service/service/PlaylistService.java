@@ -20,4 +20,6 @@ public interface PlaylistService {
     PlaylistDTO getOnePlaylistDTO(int id) throws ResourceNotFoundException;
 
     void deletePlaylist(int id) throws ResourceNotFoundException;
+
+    List<Playlist> getAllPlaylistByName(String namePlaylist);
 }

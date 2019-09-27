@@ -10,8 +10,10 @@ import java.util.List;
 
 @Repository
 public interface SongRepository extends JpaRepository<Song, Integer> {
-
     List<Song> findAllByDelectedIsFalse();
+
+    List<Song> findAllByNameContainingAndDelectedIsFalse(String songName);
+
 
 //    List<Song> findAllByDelectedIsFalseAndOrderByView_song(PageRequest pageRequest);
 
@@ -20,5 +22,6 @@ public interface SongRepository extends JpaRepository<Song, Integer> {
 
     @Query(value = "select e from Song e order by e.view_song desc")
     List<Song> topViewSong(PageRequest pageRequest);
+
 
 }

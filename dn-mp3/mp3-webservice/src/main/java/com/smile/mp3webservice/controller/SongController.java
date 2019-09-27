@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SongController {
-    String AAA = "D:\\CODE GYM\\Module_4\\FrontEnd-v2\\mp3-angular\\src\\assets\\";
+    String AAA = "D:\\WorkSpace\\FrontEnd-v2\\mp3-angular\\src\\assets\\";
 
     @Autowired
     public SongService songService;
@@ -82,6 +82,7 @@ public class SongController {
         return new ResponseEntity<Song>(song, HttpStatus.OK);
     }
 
+
     @PostMapping(value = "/addSingerToSong")
     public ResponseEntity<?> addSingerToSong(@RequestBody ReqAddSinger reqAddSinger) {
         songService.saveSongWithSinger(reqAddSinger.getIdSong(), reqAddSinger.getIdSinger());
@@ -118,6 +119,12 @@ public class SongController {
         return ResponseEntity.ok(getTotalLikeOfSong);
     }
 
+
+    @PostMapping("/searchSongName")
+    public ResponseEntity<?> getSongName(@RequestBody String nameSong){
+        List<Song> list = songService.searchSongName(nameSong);
+        return ResponseEntity.ok(list);
+
     @PostMapping(value = "/getViewSong")
     public ResponseEntity<?> getViewSong(@RequestBody int idSong){
         int viewSong = likeViewSongService.viewSong(idSong);
@@ -134,5 +141,6 @@ public class SongController {
     public ResponseEntity<?> getLikeOfSong(@RequestBody int idSong){
         int likesSong = likeViewSongService.getLikeOfSong(idSong);
         return ResponseEntity.ok(likesSong);
+
     }
 }
