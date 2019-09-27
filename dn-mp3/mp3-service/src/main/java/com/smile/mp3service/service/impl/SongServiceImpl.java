@@ -108,4 +108,8 @@ public class SongServiceImpl implements SongService{
         songRepository.save(oldSong);
     }
 
+    @Override
+    public List<Song> searchSongName(String songName) {
+        return songRepository.findAllByNameContainingAndDelectedIsFalse(songName);
+    }
 }

@@ -20,40 +20,36 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "*",allowedHeaders = "*")
 public class SingerController {
 
     @Autowired
     public SingerService singerService;
 
-    @Autowired
-    public SongService songService;
-
-    @PostMapping(value = {"/upsinger"}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value={"/upsinger"}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addSong(@ModelAttribute SingerDTO data) throws IOException {
-        try {
+        try{
             MultipartFile iSinger = data.getImg_singer();
 
-            File convertImgSinger = new File("D:\\Workspace\\module4_mp3_new\\FrontEnd-v2\\mp3-angular\\src\\assets\\" + iSinger.getOriginalFilename());
+            File convertImgSinger = new File("D:\\WorkSpace\\FrontEnd-v2\\mp3-angular\\src\\assets\\"+iSinger.getOriginalFilename());
 
             iSinger.transferTo(convertImgSinger);
             singerService.saveSinger(data);
             Singer feedback = new Singer(data);
             return new ResponseEntity<Singer>(feedback, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Wrong", HttpStatus.BAD_REQUEST);
         }
-    }
-
-    @GetMapping(value = {"/getsingers"})
-    private ResponseEntity<?> getSingers() {
-        List<Singer> singers = singerService.getSingers();
+        catch (Exception e){
+            return new ResponseEntity<>("Wrong", HttpStatus.BAD_REQUEST);
+        }}
+    @GetMapping( value = {"/getsingers"})
+    private ResponseEntity<?> getSingers(){
+        List<Singer> singers= singerService.getSingers();
         return ResponseEntity.ok(singers);
     }
 
     @GetMapping(value = "/singer/{id}")
     public ResponseEntity<Singer> getOne(@PathVariable("id") int id) throws ResourceNotFoundException {
-        Singer singer = singerService.getSinger(id);
+        Singer singer =singerService.getSinger(id);
         return ResponseEntity.ok(singer);
     }
 
@@ -69,10 +65,7 @@ public class SingerController {
     @PostMapping(value = "/searchSinger")
     public ResponseEntity<?> searchSinger(@RequestBody SearchSingerDTO nameSinger) throws ResourceNotFoundException {
         List<Singer> singers = singerService.getName(nameSinger.getNameSinger());
-        return ResponseEntity.ok(singers);
+        return new ResponseEntity<List<Singer>>(singers, HttpStatus.OK);
     }
 
 }
-
-
-

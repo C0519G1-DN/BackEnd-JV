@@ -25,7 +25,7 @@ import java.util.Map;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SongController {
-    String AAA = "D:\\CODE GYM\\Module_4\\FrontEnd-v2\\mp3-angular\\src\\assets\\";
+    String AAA = "D:\\WorkSpace\\FrontEnd-v2\\mp3-angular\\src\\assets\\";
 
     @Autowired
     public SongService songService;
@@ -84,11 +84,6 @@ public class SongController {
         return new ResponseEntity<Song>(song, HttpStatus.OK);
     }
 
-    @PutMapping(value = {"/deleteSong"})
-    public ResponseEntity<?> deletePlaylist(@RequestBody int id) throws ResourceNotFoundException {
-        songService.deleteSong(id);
-        return ResponseEntity.ok(id);
-    }
 
     @PostMapping(value = "/addSingerToSong")
     public ResponseEntity<?> addSingerToSong(@RequestBody ReqAddSinger reqAddSinger) {
@@ -124,5 +119,11 @@ public class SongController {
     public ResponseEntity<?> getTotalLikeOfSong(){
         List<Object[]> getTotalLikeOfSong = likeSongService.getTotalLikeSong();
         return ResponseEntity.ok(getTotalLikeOfSong);
+    }
+
+    @PostMapping("/searchSongName")
+    public ResponseEntity<?> getSongName(@RequestBody String nameSong){
+        List<Song> list = songService.searchSongName(nameSong);
+        return ResponseEntity.ok(list);
     }
 }

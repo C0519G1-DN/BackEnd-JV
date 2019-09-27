@@ -84,4 +84,9 @@ public class PlaylistServiceImpl implements PlaylistService {
         playlist.setDelected(true);
         playlistRepository.save(playlist);
     }
+
+    @Override
+    public List<Playlist> getAllPlaylistByName(String namePlaylist) {
+        return playlistRepository.findAllByNameContainingAndDelectedIsFalse(namePlaylist);
+    }
 }

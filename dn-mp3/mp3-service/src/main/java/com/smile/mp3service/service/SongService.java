@@ -12,12 +12,16 @@ public interface SongService {
     List<Song> getSongs();
 
     void saveSong(SongDTO songDTO);
+
     void saveSongWithSinger(int idSong, int idSinger);
 
     Song getSong(int id);
+
     void deleteSong(int id) throws ResourceNotFoundException;
 
     SongDTO getSongDTO(int id);
 
     void updateSong(Song song);
+
+    List<Song> searchSongName(String songName);
 }
