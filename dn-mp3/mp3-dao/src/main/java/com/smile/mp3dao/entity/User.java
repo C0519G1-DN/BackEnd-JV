@@ -35,11 +35,16 @@ public class User {
 //    @Unique(message = "Username is already exit")
     private String username;
 
-//    @JsonIgnore
+    @JsonIgnore
     @Column(length = 200)
     private String password;
 
     private Boolean delected;
+
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private Set<Comment> comments;
 
 //    @OneToMany(mappedBy = "User", cascade = CascadeType.ALL)
 //    private Set<LikeSong> likeSongs;
@@ -58,7 +63,6 @@ public class User {
         this.password = password;
         this.delected = delected;
     }
-
     public int getId() {
         return id;
     }
@@ -131,6 +135,7 @@ public class User {
         this.delected = delected;
     }
 
+
 //    public Set<LikeSong> getLikeSongs() {
 //        return likeSongs;
 //    }
@@ -138,6 +143,7 @@ public class User {
 //    public void setLikeSongs(Set<LikeSong> likeSongs) {
 //        this.likeSongs = likeSongs;
 //    }
+
 
     @Override
     public String toString() {
