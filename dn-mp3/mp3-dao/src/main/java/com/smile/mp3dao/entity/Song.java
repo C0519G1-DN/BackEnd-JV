@@ -26,7 +26,7 @@ public class Song {
     @Column(name = "date_create")
         private Date createDate;
 
-        private int view_song;
+        private int view_song = 0;
 
         private boolean delected;
 

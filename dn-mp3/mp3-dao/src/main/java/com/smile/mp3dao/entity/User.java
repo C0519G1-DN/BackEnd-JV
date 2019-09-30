@@ -41,10 +41,28 @@ public class User {
 
     private Boolean delected;
 
+
     @OneToMany
     @JoinColumn(name = "user_id")
     private Set<Comment> comments;
 
+//    @OneToMany(mappedBy = "User", cascade = CascadeType.ALL)
+//    private Set<LikeSong> likeSongs;
+
+    public User() {
+    }
+
+    public User(int id, String name, int age, String gender, String phone, String email, String username, String password, Boolean delected) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.phone = phone;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.delected = delected;
+    }
     public int getId() {
         return id;
     }
@@ -117,6 +135,14 @@ public class User {
         this.delected = delected;
     }
 
+
+//    public Set<LikeSong> getLikeSongs() {
+//        return likeSongs;
+//    }
+//
+//    public void setLikeSongs(Set<LikeSong> likeSongs) {
+//        this.likeSongs = likeSongs;
+//    }
 
 
     @Override

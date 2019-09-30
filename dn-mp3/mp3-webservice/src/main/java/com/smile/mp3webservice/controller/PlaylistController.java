@@ -94,4 +94,10 @@ public class PlaylistController {
         playlistService.deleteSongInPlaylist(reqAddSong.getIdPlaylist(),reqAddSong.getIdSong());
         return new ResponseEntity<ReqAddSong>(reqAddSong, HttpStatus.OK);
     }
+
+    @PostMapping("/searchPlaylistByName")
+    public ResponseEntity<?> searchPlaylistByName(@RequestBody String playlistName){
+        List<Playlist> list = playlistService.getAllPlaylistByName(playlistName);
+        return ResponseEntity.ok(list);
+    }
 }
