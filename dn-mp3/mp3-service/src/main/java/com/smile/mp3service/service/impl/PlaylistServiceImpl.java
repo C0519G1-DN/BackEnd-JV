@@ -36,6 +36,9 @@ public class PlaylistServiceImpl implements PlaylistService {
         System.out.println(playlistDTO.getUsername_create());
         playlist.setCreateDay(date);
         playlist.setDelected(false);
+
+        playlist.setView(0);
+
         playlistRepository.save(playlist);
     }
 
@@ -102,7 +105,17 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
+
+    public void addView(int idPlaylist) {
+        Playlist playlist = playlistRepository.findById(idPlaylist).orElse(null);
+        int curentView = playlist.getView();
+        playlist.setView(curentView + 1);
+        playlistRepository.save(playlist);
+    }
+
+
     public List<Playlist> getAllPlaylistByName(String namePlaylist) {
         return playlistRepository.findAllByNameContainingAndDelectedIsFalse(namePlaylist);
     }
+
 }

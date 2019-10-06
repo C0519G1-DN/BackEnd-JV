@@ -23,5 +23,9 @@ public interface PlaylistService {
 
     void deletePlaylist(int id) throws ResourceNotFoundException;
 
+
+    void addView(int idPlaylist);
+
     List<Playlist> getAllPlaylistByName(String namePlaylist);
+
 }

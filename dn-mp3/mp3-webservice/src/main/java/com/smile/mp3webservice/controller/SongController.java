@@ -23,6 +23,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SongController {
+
     String AAA = "D:\\WorkSpace\\FrontEnd-v2\\mp3-angular\\src\\assets\\";
 
     @Autowired

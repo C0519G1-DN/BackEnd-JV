@@ -18,6 +18,7 @@ public class Playlist extends BaseEntity{
     private String username_create;
     private Date createDay;
     private Boolean delected;
+    private int view;
 
     @ManyToMany
     @JoinTable(
@@ -78,7 +79,13 @@ public class Playlist extends BaseEntity{
         this.delected = delected;
     }
 
+    public int getView() {
+        return view;
+    }
 
+    public void setView(int view) {
+        this.view = view;
+    }
 
     public Set<Song> getSongs() {
         return songs;
