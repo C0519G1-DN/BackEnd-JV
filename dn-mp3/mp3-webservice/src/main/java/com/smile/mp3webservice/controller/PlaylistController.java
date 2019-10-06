@@ -12,6 +12,7 @@ import com.smile.mp3service.service.PlaylistService;
 import com.smile.mp3service.service.SongService;
 import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,8 @@ public class PlaylistController {
     PlaylistService playlistService;
     @Autowired
     SongService songService;
+    @Autowired
+    PlaylistRepository playlistRepository;
 
     @GetMapping(value = {""})
     public List<Playlist> allPlaylistDTO() {
@@ -93,5 +96,19 @@ public class PlaylistController {
     public ResponseEntity<?> deletesonginplaylist (@RequestBody ReqAddSong reqAddSong){
         playlistService.deleteSongInPlaylist(reqAddSong.getIdPlaylist(),reqAddSong.getIdSong());
         return new ResponseEntity<ReqAddSong>(reqAddSong, HttpStatus.OK);
+    }
+
+    @PostMapping(value = {"/addViewPlaylist"})
+    public ResponseEntity<?> addViewPlaylist (@RequestBody int idPlaylist) throws ResourceNotFoundException {
+        playlistService.addView(idPlaylist);
+        int totalView= playlistService.getOnePlaylist(idPlaylist).getView();
+        return new ResponseEntity<Integer>(totalView, HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = {"/getMostViewPlaylist"})
+    public ResponseEntity<?> getMostView (){
+        List<Playlist>  list = playlistRepository.gogogo2(new PageRequest(0,2));
+        return new ResponseEntity<List<Playlist>>(list, HttpStatus.OK);
     }
 }

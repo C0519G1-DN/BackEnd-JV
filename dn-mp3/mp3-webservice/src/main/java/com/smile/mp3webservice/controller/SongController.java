@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SongController {
-    String AAA= "D:\\Workspace\\module4_mp3_new\\FrontEnd-v2\\mp3-angular\\src\\assets\\";
+    String AAA= "E:\\IT\\IT-CodeGym\\4.Mod4\\MyRepository-C0519\\FrontEnd-Ng\\mp3-angular\\src\\assets\\";
     @Autowired
     public SongService songService;
 

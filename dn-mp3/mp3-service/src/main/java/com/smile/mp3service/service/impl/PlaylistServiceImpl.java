@@ -33,7 +33,7 @@ public class PlaylistServiceImpl implements PlaylistService {
         playlist.setUsername_create(playlistDTO.getUsername_create());
         playlist.setCreateDay(date);
         playlist.setDelected(false);
-
+        playlist.setView(0);
         playlistRepository.save(playlist);
     }
 
@@ -84,4 +84,14 @@ public class PlaylistServiceImpl implements PlaylistService {
         playlist.setDelected(true);
         playlistRepository.save(playlist);
     }
+
+    @Override
+    public void addView(int idPlaylist) {
+        Playlist playlist = playlistRepository.findById(idPlaylist).orElse(null);
+        int curentView = playlist.getView();
+        playlist.setView(curentView + 1);
+        playlistRepository.save(playlist);
+    }
+
+
 }

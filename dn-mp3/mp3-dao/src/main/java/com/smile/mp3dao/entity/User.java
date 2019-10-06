@@ -34,7 +34,7 @@ public class User {
 //    @Unique(message = "Username is already exit")
     private String username;
 
-//    @JsonIgnore
+    @JsonIgnore
     @Column(length = 200)
     private String password;
 
