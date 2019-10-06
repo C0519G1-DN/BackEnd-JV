@@ -43,7 +43,7 @@ public class SingerController {
             MultipartFile iSinger = data.getImg_singer();
 
 
-            File convertImgSinger = new File("D:\\WorkSpace\\FrontEnd-v2\\mp3-angular\\src\\assets\\"+iSinger.getOriginalFilename());
+            File convertImgSinger = new File("D:\\IT\\IT-CodeGym\\checkMod4\\FrontEnd-v2\\mp3-angular\\src\\assets\\"+iSinger.getOriginalFilename());
 
 
             iSinger.transferTo(convertImgSinger);

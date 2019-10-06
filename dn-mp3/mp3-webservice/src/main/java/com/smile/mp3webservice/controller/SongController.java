@@ -24,7 +24,7 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SongController {
 
-    String AAA = "D:\\WorkSpace\\FrontEnd-v2\\mp3-angular\\src\\assets\\";
+    String AAA = "D:\\IT\\IT-CodeGym\\checkMod4\\FrontEnd-v2\\mp3-angular\\src\\assets\\";
 
     @Autowired
     public SongService songService;
