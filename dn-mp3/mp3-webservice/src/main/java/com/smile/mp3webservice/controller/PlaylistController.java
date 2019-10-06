@@ -98,6 +98,7 @@ public class PlaylistController {
         return new ResponseEntity<ReqAddSong>(reqAddSong, HttpStatus.OK);
     }
 
+
     @PostMapping(value = {"/addViewPlaylist"})
     public ResponseEntity<?> addViewPlaylist (@RequestBody int idPlaylist) throws ResourceNotFoundException {
         playlistService.addView(idPlaylist);
@@ -110,5 +111,11 @@ public class PlaylistController {
     public ResponseEntity<?> getMostView (){
         List<Playlist>  list = playlistRepository.gogogo2(new PageRequest(0,2));
         return new ResponseEntity<List<Playlist>>(list, HttpStatus.OK);
+
+    @PostMapping("/searchPlaylistByName")
+    public ResponseEntity<?> searchPlaylistByName(@RequestBody String playlistName){
+        List<Playlist> list = playlistService.getAllPlaylistByName(playlistName);
+        return ResponseEntity.ok(list);
+
     }
 }

@@ -26,7 +26,7 @@ public class Song {
     @Column(name = "date_create")
         private Date createDate;
 
-        private int view_song;
+        private int view_song = 0;
 
         private boolean delected;
 
@@ -45,6 +45,9 @@ public class Song {
             inverseJoinColumns=@JoinColumn(name="singer_id", referencedColumnName="id"))
     private Set<Singer> singers = new HashSet<Singer>();
 
+    @OneToMany
+    @JoinColumn(name = "song_id")
+    private Set<Comment> comments;
 
 
     public Song(SongDTO original) {
@@ -141,5 +144,6 @@ public class Song {
     public void setSingers(Set<Singer> singers) {
         this.singers = singers;
     }
+
 }
 

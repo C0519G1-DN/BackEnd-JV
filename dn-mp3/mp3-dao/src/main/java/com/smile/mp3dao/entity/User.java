@@ -5,6 +5,7 @@ import com.smile.mp3common.validation.Unique;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "user0")
@@ -40,6 +41,14 @@ public class User {
 
     private Boolean delected;
 
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private Set<Comment> comments;
+
+//    @OneToMany(mappedBy = "User", cascade = CascadeType.ALL)
+//    private Set<LikeSong> likeSongs;
+
     public User() {
     }
 
@@ -54,7 +63,6 @@ public class User {
         this.password = password;
         this.delected = delected;
     }
-
     public int getId() {
         return id;
     }
@@ -126,6 +134,16 @@ public class User {
     public void setDelected(boolean delected) {
         this.delected = delected;
     }
+
+
+//    public Set<LikeSong> getLikeSongs() {
+//        return likeSongs;
+//    }
+//
+//    public void setLikeSongs(Set<LikeSong> likeSongs) {
+//        this.likeSongs = likeSongs;
+//    }
+
 
     @Override
     public String toString() {

@@ -11,9 +11,14 @@ import java.util.List;
 public interface PlaylistRepository extends JpaRepository<Playlist, Integer> {
     List<Playlist> findAllByDelectedIsFalse();
 
+
     String b = "SELECT e FROM Playlist e ORDER BY e.view DESC";
 
     @Query(b)
     List<Playlist> gogogo2(Pageable pageable);
+
+
+    Playlist findByIdAndDelectedIsFalse(int id);
+    List<Playlist> findAllByNameContainingAndDelectedIsFalse(String namePlaylist);
 
 }
